@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BaseResources" load_steps=3 format=3 uid="uid://n2d16qh1n042"]
+
+[ext_resource type="Script" path="res://source/resources/base_resource.gd" id="1_gpb86"]
+[ext_resource type="Texture2D" uid="uid://di5xjj38qsenq" path="res://assets/texture/resources/tile_0106.png" id="2_s341j"]
+
+[resource]
+script = ExtResource("1_gpb86")
+id = 0
+name = "wood"
+texture = ExtResource("2_s341j")
+min_drop = 1
+max_drop = 3
+current_type_name = 1

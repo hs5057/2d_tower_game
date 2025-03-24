@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://cb2r4t1tu6ecx"]
+
+[ext_resource type="Script" path="res://source/entity/harvestable_objet/base_harvestable_objet.gd" id="1_njv2a"]
+[ext_resource type="PackedScene" uid="uid://cb3ojwjm7dob5" path="res://source/component/health_component.tscn" id="2_3abs4"]
+[ext_resource type="PackedScene" uid="uid://b6y8y5nl7tui6" path="res://source/component/hit_flash_component.tscn" id="3_2vqvj"]
+[ext_resource type="PackedScene" uid="uid://dc1i0onn0u02r" path="res://source/component/hurt_box_component.tscn" id="3_dcsw5"]
+[ext_resource type="Shader" path="res://source/component/hit_flash_component.gdshader" id="4_ar085"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t31md"]
+resource_local_to_scene = true
+shader = ExtResource("4_ar085")
+shader_parameter/lerp_percent = 0.0
+
+[node name="BaseHarvestableObjet" type="StaticBody2D" node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("1_njv2a")
+hurtbox = NodePath("Area/HurtBoxComponent")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_3abs4")]
+unique_name_in_owner = true
+max_health = 3.0
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("3_2vqvj")]
+unique_name_in_owner = true
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Sprite2D")
+hit_flash_material = SubResource("ShaderMaterial_t31md")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+offset = Vector2(0, -15)
+
+[node name="Area" type="Node2D" parent="."]
+
+[node name="HurtBoxComponent" parent="Area" node_paths=PackedStringArray("health_component") instance=ExtResource("3_dcsw5")]
+unique_name_in_owner = true
+collision_layer = 64
+collision_mask = 8
+health_component = NodePath("../../HealthComponent")
+
+[node name="FloatingTextMarker" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -27)

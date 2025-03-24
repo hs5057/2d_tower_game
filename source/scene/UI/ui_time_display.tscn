@@ -1,0 +1,137 @@
+[gd_scene load_steps=7 format=3 uid="uid://c8v3l2pytwrc8"]
+
+[ext_resource type="Script" path="res://source/scene/UI/ui_time_display.gd" id="1_qpd7x"]
+[ext_resource type="Texture2D" uid="uid://bblvbgab1koy3" path="res://assets/texture/ui/GUI.png" id="2_fsxyo"]
+[ext_resource type="Texture2D" uid="uid://c5pc1lrxx22m6" path="res://assets/texture/ui/moon.png" id="3_00266"]
+[ext_resource type="Texture2D" uid="uid://bko6sw7qfn0h5" path="res://assets/texture/ui/seasons/spring.png" id="4_2bqnc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pre5w"]
+atlas = ExtResource("2_fsxyo")
+region = Rect2(0, 96, 48, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wargm"]
+texture = SubResource("AtlasTexture_pre5w")
+texture_margin_left = 6.0
+texture_margin_top = 6.0
+texture_margin_right = 6.0
+texture_margin_bottom = 5.0
+
+[node name="UI_TimeDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+script = ExtResource("1_qpd7x")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -65.0
+offset_bottom = 35.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(80, 44)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_wargm")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(28, 33)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="DayNightTexture" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("3_00266")
+expand_mode = 2
+stretch_mode = 6
+
+[node name="SeasonTexture" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(14, 12)
+layout_mode = 2
+texture = ExtResource("4_2bqnc")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TimeLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 17)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_colors/font_shadow_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 11
+text = "24:59"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 25)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(38, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_right = 2
+
+[node name="YearLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(38, 15)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_colors/font_shadow_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 8
+text = "1年"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(38, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/margin_right = 2
+
+[node name="DateLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(38, 18)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 10
+theme_override_colors/font_shadow_color = Color(0.0941176, 0.0784314, 0.145098, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 11
+text = "01 / 01"
+horizontal_alignment = 2
+vertical_alignment = 1

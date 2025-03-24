@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://dca5x6hgibajj"]
+
+[ext_resource type="Script" path="res://source/scene/UI/spawn_count_down.gd" id="1_fr547"]
+[ext_resource type="Texture2D" uid="uid://p7s5hoya61ky" path="res://assets/texture/ui/圆形进度-16px-2.png" id="4_i600j"]
+[ext_resource type="Texture2D" uid="uid://dyka28k7rk14e" path="res://assets/texture/ui/圆形进度-16px-1.png" id="5_c7qm5"]
+[ext_resource type="Texture2D" uid="uid://c355wjmuh1h5v" path="res://assets/texture/ui/圆形进度-16px-3.png" id="5_i4uoc"]
+
+[node name="SpawnCountDown" type="Control"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 16.0
+offset_bottom = 16.0
+pivot_offset = Vector2(8, 8)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_fr547")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+offset_right = 16.0
+offset_bottom = 16.0
+pivot_offset = Vector2(8, 8)
+texture = ExtResource("5_i4uoc")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+offset_right = 16.0
+offset_bottom = 16.0
+pivot_offset = Vector2(8, 8)
+max_value = 1.0
+step = 0.01
+value = 0.1
+fill_mode = 4
+texture_under = ExtResource("5_c7qm5")
+texture_over = ExtResource("4_i600j")
+texture_progress = ExtResource("5_c7qm5")
+tint_under = Color(0.247059, 0.156863, 0.196078, 1)
+tint_over = Color(0.454902, 0.247059, 0.223529, 1)
+tint_progress = Color(0.721569, 0.435294, 0.313726, 1)
+
+[node name="CountdownTimer" type="Timer" parent="."]
+one_shot = true

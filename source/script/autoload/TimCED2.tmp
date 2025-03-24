@@ -1,0 +1,62 @@
+extends Node
+
+# 时间流速配置（现实1秒 = 游戏时间2分钟）
+const REAL_SECONDS_PER_GAME_HOUR = 1  # 现实30秒 = 游戏1小时
+var game_time_speed: float = 1.0 / REAL_SECONDS_PER_GAME_HOUR  # 时间流速倍率
+
+# 时间初始值
+var year: int = 1
+var month: int = 1
+var day: int = 1
+var hour: int = 8
+var minute: int = 0
+
+var is_daytime: bool = false  # 当前是否为白天
+var current_season: String = "Spring"  # 当前季节
+
+signal time_updated(year: int, month: int, day: int, hour: int, minute: int)
+signal day_night_switch(is_daytime: bool)
+signal season_changed(season: String)
+
+func _process(delta: float):
+	# 推进时间（按现实时间流速）
+	advance_time(delta * game_time_speed * 3600)  # delta * 秒 => 游戏时间秒
+
+func advance_time(seconds: float):
+	minute += int(seconds / 60)
+	hour += minute / 60
+	minute = minute % 60
+	hour = hour % 24
+	
+	# 天数增加
+	if hour == 0 && minute == 0:
+		day += 1
+		# 月份和年份处理
+		if day > 30:
+			day = 1
+			month += 1
+			if month > 12:
+				month = 1
+				year += 1
+		update_season()
+	
+	# 昼夜切换检测
+	var new_daytime = (hour >= 6 and hour < 18)
+	if new_daytime != is_daytime:
+		is_daytime = new_daytime
+		day_night_switch.emit(is_daytime)
+	
+	print("[TimeSystem] 当前时间: %04d-%02d-%02d %02d:%02d" % [year, month, day, hour, minute])
+	time_updated.emit(year, month, day, hour, minute)
+
+
+func update_season():
+	if month in [3, 4, 5]:
+		current_season = "Spring"
+	elif month in [6, 7, 8]:
+		current_season = "Summer"
+	elif month in [9, 10, 11]:
+		current_season = "Autumn"
+	else:
+		current_season = "Winter"
+	season_changed.emit(current_season)

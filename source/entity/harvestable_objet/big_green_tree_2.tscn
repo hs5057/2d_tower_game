@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://kg66jtnfbikl"]
+
+[ext_resource type="PackedScene" uid="uid://cb2r4t1tu6ecx" path="res://source/entity/harvestable_objet/base_harvestable_objet.tscn" id="1_ky4oi"]
+[ext_resource type="PackedScene" uid="uid://dywpvi52bm53m" path="res://source/entity/harvestable_resources/wood.tscn" id="2_1l7rq"]
+[ext_resource type="Shader" path="res://source/component/hit_flash_component.gdshader" id="3_0ogho"]
+[ext_resource type="Texture2D" uid="uid://fp23ctagd6sj" path="res://assets/texture/tilemap/punyworld-overworld-tileset.png" id="4_ivx8y"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t31md"]
+resource_local_to_scene = true
+shader = ExtResource("3_0ogho")
+shader_parameter/lerp_percent = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q65nd"]
+atlas = ExtResource("4_ivx8y")
+region = Rect2(32, 432, 16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v2qes"]
+size = Vector2(4, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s1c5h"]
+size = Vector2(4, 4)
+
+[node name="BigGreenTree2" instance=ExtResource("1_ky4oi")]
+collision_mask = 2
+resources_scene = ExtResource("2_1l7rq")
+
+[node name="HealthComponent" parent="." index="0"]
+max_health = 2.0
+
+[node name="HitFlashComponent" parent="." index="1"]
+hit_flash_material = SubResource("ShaderMaterial_t31md")
+
+[node name="Sprite2D" parent="." index="2"]
+texture = SubResource("AtlasTexture_q65nd")
+offset = Vector2(0, -6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="3"]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_v2qes")
+
+[node name="HurtBoxComponent" parent="Area" index="0"]
+hitbox_name = Array[String](["Axe"])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area/HurtBoxComponent" index="1"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_s1c5h")
+debug_color = Color(0, 0.646, 0.242, 0.633)
+
+[node name="FloatingTextMarker" parent="." index="5"]
+position = Vector2(0, -8)

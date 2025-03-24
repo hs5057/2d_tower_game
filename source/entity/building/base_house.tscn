@@ -1,0 +1,128 @@
+[gd_scene load_steps=17 format=3 uid="uid://d348buu0df1vj"]
+
+[ext_resource type="Script" path="res://source/entity/building/base_house.gd" id="1_has37"]
+[ext_resource type="PackedScene" uid="uid://cb3ojwjm7dob5" path="res://source/component/health_component.tscn" id="1_sys1e"]
+[ext_resource type="Texture2D" uid="uid://fp23ctagd6sj" path="res://assets/texture/tilemap/punyworld-overworld-tileset.png" id="1_uaumv"]
+[ext_resource type="PackedScene" uid="uid://b6y8y5nl7tui6" path="res://source/component/hit_flash_component.tscn" id="2_6yitu"]
+[ext_resource type="Shader" path="res://source/component/hit_flash_component.gdshader" id="3_yw4iv"]
+[ext_resource type="PackedScene" uid="uid://dc1i0onn0u02r" path="res://source/component/hurt_box_component.tscn" id="4_mq5go"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y75pc"]
+resource_local_to_scene = true
+shader = ExtResource("3_yw4iv")
+shader_parameter/lerp_percent = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x4rmp"]
+size = Vector2(28, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgswv"]
+atlas = ExtResource("1_uaumv")
+region = Rect2(240, 528, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x7mnj"]
+radius = 27.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7u0yx"]
+bg_color = Color(0.337331, 0.0197365, 0.112381, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_whsve"]
+bg_color = Color(0, 0.913725, 0.517647, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xuua1"]
+radius = 27.0
+
+[sub_resource type="Gradient" id="Gradient_xov2w"]
+offsets = PackedFloat32Array(0, 0.663189, 0.773472, 0.894188, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0.634615, 0.634615, 0.634615, 1, 0.099986, 0.099986, 0.099986, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_682ru"]
+gradient = SubResource("Gradient_xov2w")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.897436, 0.183761)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3cc7h"]
+radius = 160.0
+
+[node name="BaseHouse" type="StaticBody2D" groups=["BaseHouse"]]
+collision_mask = 258
+script = ExtResource("1_has37")
+metadata/_edit_vertical_guides_ = [-288.0]
+metadata/_edit_horizontal_guides_ = [-303.0]
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_sys1e")]
+max_health = 100.0
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("2_6yitu")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Sprite2D")
+hit_flash_material = SubResource("ShaderMaterial_y75pc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_x4rmp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 4
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_wgswv")
+offset = Vector2(0, -8)
+
+[node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_mq5go")]
+collision_layer = 32
+collision_mask = 512
+health_component = NodePath("../HealthComponent")
+HurtIntervalTimer = 0.15
+hitbox_name = Array[String](["Enemy", "Axe"])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_x7mnj")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(16, 2)
+offset_left = -8.0
+offset_top = -20.0
+offset_right = 8.0
+offset_bottom = -18.0
+theme_override_styles/background = SubResource("StyleBoxFlat_7u0yx")
+theme_override_styles/fill = SubResource("StyleBoxFlat_whsve")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="FloatingTextMarker" type="Marker2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CanAttackRange" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanAttackRange"]
+unique_name_in_owner = true
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_xuua1")
+debug_color = Color(0.0544484, 0.650048, 3.85046e-07, 0.42)
+
+[node name="FinalPosition" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -16)
+gizmo_extents = 45.0
+
+[node name="PointLight2D" type="PointLight2D" parent="." groups=["PointLight"]]
+position = Vector2(0, -16)
+color = Color(1, 1, 1, 0)
+range_item_cull_mask = 21
+texture = SubResource("GradientTexture2D_682ru")
+texture_scale = 3.0
+
+[node name="LightArea" type="Area2D" parent="."]
+collision_layer = 8192
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LightArea"]
+position = Vector2(0, -16)
+shape = SubResource("CircleShape2D_3cc7h")
+debug_color = Color(0.939569, 1.15514e-05, 0.618803, 0.42)

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="BaseResources" load_steps=4 format=3 uid="uid://k2lkwfwi75eq"]
+
+[ext_resource type="Script" path="res://source/resources/base_resource.gd" id="1_bksxp"]
+[ext_resource type="Texture2D" uid="uid://fp23ctagd6sj" path="res://assets/texture/tilemap/punyworld-overworld-tileset.png" id="2_auvqb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qp2ba"]
+atlas = ExtResource("2_auvqb")
+region = Rect2(16, 416, 16, 16)
+
+[resource]
+script = ExtResource("1_bksxp")
+id = 0
+name = "stone"
+texture = SubResource("AtlasTexture_qp2ba")
+min_drop = 1
+max_drop = 3
+current_type_name = 2

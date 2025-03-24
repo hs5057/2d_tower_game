@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://qmyieheusr13"]
+
+[ext_resource type="Texture2D" uid="uid://q3scn7udn4co" path="res://assets/texture/bullet/arrow.png" id="1_fp67s"]
+[ext_resource type="Script" path="res://source/entity/Bullet/arrow_bullet.gd" id="1_s4xwe"]
+[ext_resource type="PackedScene" uid="uid://bghi3cbgrvuge" path="res://source/component/hitbox_component.tscn" id="1_sgxwj"]
+
+[sub_resource type="Curve2D" id="Curve2D_rcv5f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iac38"]
+size = Vector2(3, 3)
+
+[node name="ArrowBullet" type="Path2D"]
+z_index = 10
+curve = SubResource("Curve2D_rcv5f")
+script = ExtResource("1_s4xwe")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D"]
+unique_name_in_owner = true
+position = Vector2(6, 0)
+texture = ExtResource("1_fp67s")
+offset = Vector2(-5, 0)
+
+[node name="HitboxComponent" parent="PathFollow2D/Sprite2D" instance=ExtResource("1_sgxwj")]
+unique_name_in_owner = true
+collision_layer = 2048
+collision_mask = 1024
+damage = 2.0
+force = 20.0
+hitbox_name = "ArrowBullet"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/Sprite2D/HitboxComponent"]
+unique_name_in_owner = true
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_iac38")
+disabled = true

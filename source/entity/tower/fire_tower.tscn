@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://bba7x83b8jpgc"]
+
+[ext_resource type="PackedScene" uid="uid://ctavi6etyfveo" path="res://source/entity/tower/base_tower.tscn" id="1_sp3sd"]
+[ext_resource type="PackedScene" uid="uid://c0m5q278c7juf" path="res://source/entity/Bullet/fire_bullet.tscn" id="2_8ve60"]
+[ext_resource type="Shader" path="res://source/component/hit_flash_component.gdshader" id="2_q1xft"]
+[ext_resource type="Texture2D" uid="uid://dqfqifu2xxjeh" path="res://assets/texture/tower/base_tower4.png" id="3_c0pob"]
+[ext_resource type="AudioStream" uid="uid://bcfv531t8jkqj" path="res://assets/audio/hit/563536__colorscrimsontears__fire-3-rpg.wav" id="5_d2j8n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r7bjq"]
+resource_local_to_scene = true
+shader = ExtResource("2_q1xft")
+shader_parameter/lerp_percent = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d5mxx"]
+radius = 30.0
+
+[node name="FireTower" instance=ExtResource("1_sp3sd")]
+bullet_scene = ExtResource("2_8ve60")
+attack_range_radius = 43.0
+current_tower_type = 2
+
+[node name="HitFlashComponent" parent="." index="1"]
+hit_flash_material = SubResource("ShaderMaterial_r7bjq")
+
+[node name="Sprite2D" parent="." index="2"]
+texture = ExtResource("3_c0pob")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" index="0"]
+unique_name_in_owner = true
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_d5mxx")
+
+[node name="ShootAudio" parent="." index="8"]
+volume_db = -20.0
+streams = Array[AudioStream]([ExtResource("5_d2j8n")])
+
+[node name="CircleOutline" parent="." index="9"]
+visible = true

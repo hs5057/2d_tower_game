@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://7rplv1cr6kcd"]
+
+[ext_resource type="Script" path="res://source/scene/UI/slot_background.gd" id="1_5x4rp"]
+[ext_resource type="Texture2D" uid="uid://durspq5g6w46i" path="res://assets/texture/ui/快捷物品栏.png" id="2_qvtji"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dq3xu"]
+bg_color = Color(0.913493, 0.832868, 0.634561, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fdohw"]
+bg_color = Color(1, 1, 1, 0)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2anyf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxmwi"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+anti_aliasing = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyt81"]
+atlas = ExtResource("2_qvtji")
+region = Rect2(20, 68, 24, 24)
+
+[node name="SlotBackground" type="Button"]
+custom_minimum_size = Vector2(26, 26)
+offset_right = 26.0
+offset_bottom = 26.0
+pivot_offset = Vector2(13, 13)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/focus = SubResource("StyleBoxFlat_dq3xu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fdohw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2anyf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_vxmwi")
+script = ExtResource("1_5x4rp")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_vyt81")
+stretch_mode = 3

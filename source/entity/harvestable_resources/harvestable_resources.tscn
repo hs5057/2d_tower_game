@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddbbemfex5roe"]
+
+[ext_resource type="Script" path="res://source/entity/harvestable_resources/harvestable_resources.gd" id="1_w8eyn"]
+[ext_resource type="PackedScene" uid="uid://c1stjyp02162r" path="res://source/component/random_audio_component.tscn" id="2_wg3w5"]
+[ext_resource type="AudioStream" uid="uid://dn3qyvd3tsko5" path="res://assets/audio/pickup/664872__leonohra__plopp.mp3" id="3_fwl35"]
+[ext_resource type="AudioStream" uid="uid://ed2sm5xwweht" path="res://assets/audio/pickup/665181__el_boss__item-or-material-pickup-pop-3-of-3.wav" id="4_na2ny"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3to82"]
+radius = 6.0
+
+[node name="HarvestableResources" type="Area2D"]
+position = Vector2(0, -1.62345)
+monitoring = false
+script = ExtResource("1_w8eyn")
+
+[node name="PickupAudio" parent="." instance=ExtResource("2_wg3w5")]
+volume_db = -10.0
+streams = Array[AudioStream]([ExtResource("3_fwl35"), ExtResource("4_na2ny")])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3to82")

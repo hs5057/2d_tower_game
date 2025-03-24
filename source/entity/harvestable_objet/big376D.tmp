@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://xc82ilgpwfmq"]
+
+[ext_resource type="PackedScene" uid="uid://cb2r4t1tu6ecx" path="res://source/entity/harvestable_objet/base_harvestable_objet.tscn" id="1_ph67n"]
+[ext_resource type="PackedScene" uid="uid://dywpvi52bm53m" path="res://source/entity/harvestable_resources/wood.tscn" id="2_1vqtn"]
+[ext_resource type="Shader" path="res://source/component/hit_flash_component.gdshader" id="3_h3ana"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wgaek"]
+resource_local_to_scene = true
+shader = ExtResource("3_h3ana")
+shader_parameter/lerp_percent = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s1c5h"]
+size = Vector2(4, 5)
+
+[node name="BigGreenTree" instance=ExtResource("1_ph67n")]
+collision_layer = 64
+collision_mask = 8
+resources_scene = ExtResource("2_1vqtn")
+
+[node name="HitFlashComponent" parent="." index="1" node_paths=PackedStringArray("health_component", "sprite")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Sprite2D")
+hit_flash_material = SubResource("ShaderMaterial_wgaek")
+
+[node name="CollisionShape2D" parent="." index="3"]
+debug_color = Color(0, 0.6, 0.7, 0.729)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area/HurtBoxComponent" index="1"]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_s1c5h")
+debug_color = Color(0, 0.646, 0.242, 0.633)

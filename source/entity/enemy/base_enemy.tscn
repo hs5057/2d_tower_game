@@ -1,0 +1,89 @@
+[gd_scene load_steps=12 format=3 uid="uid://de7n5eahwhcuf"]
+
+[ext_resource type="Script" path="res://source/entity/enemy/base_enemy.gd" id="1_0dh1y"]
+[ext_resource type="PackedScene" uid="uid://cb3ojwjm7dob5" path="res://source/component/health_component.tscn" id="1_x3xqa"]
+[ext_resource type="PackedScene" uid="uid://b6y8y5nl7tui6" path="res://source/component/hit_flash_component.tscn" id="2_6kqqp"]
+[ext_resource type="Shader" path="res://source/component/hit_flash_component.gdshader" id="3_pp8qw"]
+[ext_resource type="PackedScene" uid="uid://dc1i0onn0u02r" path="res://source/component/hurt_box_component.tscn" id="4_icghc"]
+[ext_resource type="PackedScene" uid="uid://bghi3cbgrvuge" path="res://source/component/hitbox_component.tscn" id="6_7f6sx"]
+[ext_resource type="PackedScene" uid="uid://c1stjyp02162r" path="res://source/component/random_audio_component.tscn" id="7_sjcv0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n2j51"]
+resource_local_to_scene = true
+shader = ExtResource("3_pp8qw")
+shader_parameter/lerp_percent = 0.0
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wvew5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qw0b6"]
+bg_color = Color(0.26, 0.052, 0.052, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gpfef"]
+bg_color = Color(0, 0.82, 0.382667, 1)
+
+[node name="BaseEnemy" type="CharacterBody2D"]
+collision_layer = 256
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_0dh1y")
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_x3xqa")]
+unique_name_in_owner = true
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("2_6kqqp")]
+unique_name_in_owner = true
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Visuals/Sprite2D")
+hit_flash_material = SubResource("ShaderMaterial_n2j51")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_wvew5")
+}
+
+[node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_icghc")]
+unique_name_in_owner = true
+health_component = NodePath("../HealthComponent")
+hitbox_name = Array[String](["FireBullet", "ArrowBullet", "Axe"])
+
+[node name="FloatingTextMarker" type="Marker2D" parent="."]
+unique_name_in_owner = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+unique_name_in_owner = true
+
+[node name="AttackIntervalTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.1
+one_shot = true
+
+[node name="HitboxComponent" parent="." instance=ExtResource("6_7f6sx")]
+unique_name_in_owner = true
+
+[node name="HurtAudio" parent="." instance=ExtResource("7_sjcv0")]
+
+[node name="HealthProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 2)
+offset_left = -8.0
+offset_top = -2.0
+offset_right = 8.0
+pivot_offset = Vector2(8, 2)
+size_flags_horizontal = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_qw0b6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gpfef")
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0

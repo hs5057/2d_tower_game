@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2yraa7ftc83k"]
+
+[ext_resource type="Script" path="res://source/scene/UI/floating_text.gd" id="1_6ib35"]
+
+[node name="FloatingText" type="Node2D"]
+script = ExtResource("1_6ib35")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(42, 17)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -8.5
+offset_right = 21.0
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.74658, 4.13924e-05, 2.23327e-05, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 10
+text = "123789"
+horizontal_alignment = 1
+vertical_alignment = 1

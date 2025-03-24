@@ -1,0 +1,256 @@
+[gd_scene load_steps=14 format=3 uid="uid://cv5heykx5kyj4"]
+
+[ext_resource type="Texture2D" uid="uid://denxqspqb1t2p" path="res://assets/texture/tilemap/tilemap_packed.png" id="1_0my4j"]
+[ext_resource type="Script" path="res://source/scene/UI/game_ui.gd" id="1_dq8t4"]
+[ext_resource type="PackedScene" uid="uid://7rplv1cr6kcd" path="res://source/scene/UI/slot_background.tscn" id="2_neueg"]
+[ext_resource type="Texture2D" uid="uid://dkwf2bnvntqbs" path="res://assets/texture/tilemap/tilemap_packed2.png" id="3_vqf8p"]
+[ext_resource type="Texture2D" uid="uid://fp23ctagd6sj" path="res://assets/texture/tilemap/punyworld-overworld-tileset.png" id="4_syu0p"]
+[ext_resource type="PackedScene" uid="uid://beoxyu150c3qn" path="res://source/scene/UI/resources_nav.tscn" id="6_scixa"]
+[ext_resource type="PackedScene" uid="uid://c8v3l2pytwrc8" path="res://source/scene/UI/ui_time_display.tscn" id="7_lr2wu"]
+[ext_resource type="PackedScene" uid="uid://dca5x6hgibajj" path="res://source/scene/UI/spawn_count_down.tscn" id="8_i3jky"]
+[ext_resource type="PackedScene" uid="uid://dcg7fsn0f1qcp" path="res://source/scene/UI/debug_level.tscn" id="9_463du"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6fkh"]
+atlas = ExtResource("3_vqf8p")
+region = Rect2(176, 144, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpq7y"]
+atlas = ExtResource("1_0my4j")
+region = Rect2(112, 144, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s272d"]
+atlas = ExtResource("3_vqf8p")
+region = Rect2(176, 144, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ev6i"]
+atlas = ExtResource("4_syu0p")
+region = Rect2(272, 528, 16, 16)
+
+[node name="GameUI" type="CanvasLayer"]
+script = ExtResource("1_dq8t4")
+
+[node name="ShortcutBar" type="Control" parent="."]
+custom_minimum_size = Vector2(236, 34)
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShortcutBar"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -118.0
+offset_top = -61.0
+offset_right = 118.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer2" type="MarginContainer" parent="ShortcutBar/VBoxContainer"]
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 2
+
+[node name="WeaponGrid" type="GridContainer" parent="ShortcutBar/VBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/v_separation = 0
+
+[node name="Weapon1" parent="ShortcutBar/VBoxContainer/MarginContainer2/WeaponGrid" instance=ExtResource("2_neueg")]
+unique_name_in_owner = true
+layout_mode = 2
+index_num = 1
+type_name = "Weapon_1"
+slot_name = "Axe"
+
+[node name="TextureRect2" type="TextureRect" parent="ShortcutBar/VBoxContainer/MarginContainer2/WeaponGrid/Weapon1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_j6fkh")
+stretch_mode = 3
+
+[node name="Weapon2" parent="ShortcutBar/VBoxContainer/MarginContainer2/WeaponGrid" instance=ExtResource("2_neueg")]
+unique_name_in_owner = true
+layout_mode = 2
+index_num = 2
+type_name = "Weapon_2"
+slot_name = "Pickaxe"
+
+[node name="TextureRect2" type="TextureRect" parent="ShortcutBar/VBoxContainer/MarginContainer2/WeaponGrid/Weapon2"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_qpq7y")
+
+[node name="MarginContainer" type="MarginContainer" parent="ShortcutBar/VBoxContainer"]
+custom_minimum_size = Vector2(236, 31)
+layout_mode = 2
+theme_override_constants/margin_bottom = 5
+
+[node name="GridContainer" type="GridContainer" parent="ShortcutBar/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+columns = 8
+
+[node name="SlotBackground1" parent="ShortcutBar/VBoxContainer/MarginContainer/GridContainer" instance=ExtResource("2_neueg")]
+unique_name_in_owner = true
+layout_mode = 2
+index_num = 1
+type_name = "Weapon"
+
+[node name="TextureRect2" type="TextureRect" parent="ShortcutBar/VBoxContainer/MarginContainer/GridContainer/SlotBackground1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_s272d")
+stretch_mode = 3
+
+[node name="SlotBackground2" parent="ShortcutBar/VBoxContainer/MarginContainer/GridContainer" instance=ExtResource("2_neueg")]
+unique_name_in_owner = true
+layout_mode = 2
+index_num = 2
+type_name = "building"
+
+[node name="TextureRect2" type="TextureRect" parent="ShortcutBar/VBoxContainer/MarginContainer/GridContainer/SlotBackground2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_7ev6i")
+stretch_mode = 3
+
+[node name="SlotBackground3" parent="ShortcutBar/VBoxContainer/MarginContainer/GridContainer" instance=ExtResource("2_neueg")]
+unique_name_in_owner = true
+layout_mode = 2
+index_num = 3
+
+[node name="SlotBackground4" parent="ShortcutBar/VBoxContainer/MarginContainer/GridContainer" instance=ExtResource("2_neueg")]
+unique_name_in_owner = true
+layout_mode = 2
+index_num = 4
+
+[node name="SlotBackground5" parent="ShortcutBar/VBoxContainer/MarginContainer/GridContainer" instance=ExtResource("2_neueg")]
+unique_name_in_owner = true
+layout_mode = 2
+index_num = 5
+
+[node name="SlotBackground6" parent="ShortcutBar/VBoxContainer/MarginContainer/GridContainer" instance=ExtResource("2_neueg")]
+unique_name_in_owner = true
+layout_mode = 2
+index_num = 6
+
+[node name="SlotBackground7" parent="ShortcutBar/VBoxContainer/MarginContainer/GridContainer" instance=ExtResource("2_neueg")]
+unique_name_in_owner = true
+layout_mode = 2
+index_num = 7
+
+[node name="SlotBackground8" parent="ShortcutBar/VBoxContainer/MarginContainer/GridContainer" instance=ExtResource("2_neueg")]
+unique_name_in_owner = true
+layout_mode = 2
+index_num = 8
+
+[node name="ResourcesNav" parent="." instance=ExtResource("6_scixa")]
+
+[node name="UI_TimeDisplay" parent="." instance=ExtResource("7_lr2wu")]
+
+[node name="DebugLevel" parent="." instance=ExtResource("9_463du")]
+offset_left = 13.0
+offset_top = 41.0
+offset_right = 137.0
+offset_bottom = 81.0
+
+[node name="Countdowns" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopCountdown" parent="Countdowns" instance=ExtResource("8_i3jky")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_top = 21.0
+offset_right = 8.0
+offset_bottom = 37.0
+grow_horizontal = 2
+
+[node name="RightCountdown" parent="Countdowns" instance=ExtResource("8_i3jky")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -8.0
+offset_right = -16.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="BottomCountdown" parent="Countdowns" instance=ExtResource("8_i3jky")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -48.0
+offset_right = 8.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="LeftCountdown" parent="Countdowns" instance=ExtResource("8_i3jky")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = -8.0
+offset_right = 32.0
+offset_bottom = 8.0
+grow_vertical = 2

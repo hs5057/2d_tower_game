@@ -1,0 +1,121 @@
+[gd_scene load_steps=14 format=3 uid="uid://ctavi6etyfveo"]
+
+[ext_resource type="PackedScene" uid="uid://cb3ojwjm7dob5" path="res://source/component/health_component.tscn" id="1_brop1"]
+[ext_resource type="Script" path="res://source/entity/tower/base_tower.gd" id="1_xqc5t"]
+[ext_resource type="PackedScene" uid="uid://b6y8y5nl7tui6" path="res://source/component/hit_flash_component.tscn" id="2_rbd05"]
+[ext_resource type="Shader" path="res://source/component/hit_flash_component.gdshader" id="3_mxpa6"]
+[ext_resource type="Texture2D" uid="uid://8vyki41x5egi" path="res://assets/texture/tower/base_tower1.png" id="4_goj3v"]
+[ext_resource type="PackedScene" uid="uid://c1stjyp02162r" path="res://source/component/random_audio_component.tscn" id="6_0ijol"]
+[ext_resource type="AudioStream" uid="uid://d1vp6y47nkkwv" path="res://assets/audio/hit/406410__kretopi__arrow-005.wav" id="8_1snv2"]
+[ext_resource type="PackedScene" uid="uid://c0nvfhgy2y1u5" path="res://source/scene/UI/circle_outline.tscn" id="8_hs7yy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r7bjq"]
+resource_local_to_scene = true
+shader = ExtResource("3_mxpa6")
+shader_parameter/lerp_percent = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nrmlc"]
+size = Vector2(10, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ghohk"]
+size = Vector2(12, 16)
+
+[sub_resource type="Gradient" id="Gradient_bq2gw"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4uxjd"]
+gradient = SubResource("Gradient_bq2gw")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.884615, 0.226496)
+
+[node name="BaseTower" type="StaticBody2D"]
+collision_mask = 259
+script = ExtResource("1_xqc5t")
+attack_interval = 1.5
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_brop1")]
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("health_component", "sprite") instance=ExtResource("2_rbd05")]
+health_component = NodePath("../HealthComponent")
+sprite = NodePath("../Sprite2D")
+hit_flash_material = SubResource("ShaderMaterial_r7bjq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 8
+texture = ExtResource("4_goj3v")
+offset = Vector2(0, -8)
+
+[node name="BulletNode" type="Node2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_nrmlc")
+
+[node name="ShootPoint" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -9)
+
+[node name="AttackRange" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 256
+
+[node name="AttackTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="ShootAudio" parent="." instance=ExtResource("6_0ijol")]
+volume_db = -5.0
+streams = Array[AudioStream]([ExtResource("8_1snv2")])
+
+[node name="CircleOutline" parent="." instance=ExtResource("8_hs7yy")]
+unique_name_in_owner = true
+visible = false
+light_mask = 8
+offset_left = -100.0
+offset_top = -109.0
+offset_right = 0.0
+offset_bottom = -9.0
+
+[node name="CircleOutlineArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CircleOutlineArea"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_ghohk")
+
+[node name="StateLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -39.0
+offset_top = -30.0
+offset_right = 39.0
+offset_bottom = -18.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 8
+text = "current_state = stop"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointLight2D" type="PointLight2D" parent="." groups=["PointLight"]]
+position = Vector2(0, -9)
+scale = Vector2(0.35, 0.35)
+color = Color(1, 1, 1, 0)
+energy = 0.3
+range_item_cull_mask = 17
+texture = SubResource("GradientTexture2D_4uxjd")
+texture_scale = 3.0
+
+[node name="PointLight2D2" type="PointLight2D" parent="." groups=["PointLight"]]
+position = Vector2(0, -9)
+scale = Vector2(0.35, 0.35)
+color = Color(1, 1, 1, 0)
+energy = 1.5
+range_item_cull_mask = 8
+texture = SubResource("GradientTexture2D_4uxjd")
+texture_scale = 3.0
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="CircleOutlineArea" to="." method="_on_circle_outline_area_mouse_entered"]
+[connection signal="mouse_exited" from="CircleOutlineArea" to="." method="_on_circle_outline_area_mouse_exited"]

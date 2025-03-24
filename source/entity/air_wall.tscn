@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://2bjasq8y1ao8"]
+
+[node name="AirWall" type="StaticBody2D"]
+collision_mask = 2

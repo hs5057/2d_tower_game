@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://buvp4t2qjic23"]
+
+[ext_resource type="PackedScene" uid="uid://cb2r4t1tu6ecx" path="res://source/entity/harvestable_objet/base_harvestable_objet.tscn" id="1_danh2"]
+[ext_resource type="Shader" path="res://source/component/hit_flash_component.gdshader" id="2_abcd4"]
+[ext_resource type="PackedScene" uid="uid://bsndejs3elflu" path="res://source/entity/harvestable_resources/stone.tscn" id="2_ce85j"]
+[ext_resource type="Texture2D" uid="uid://fp23ctagd6sj" path="res://assets/texture/tilemap/punyworld-overworld-tileset.png" id="3_1lvuf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t31md"]
+resource_local_to_scene = true
+shader = ExtResource("2_abcd4")
+shader_parameter/lerp_percent = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjybo"]
+atlas = ExtResource("3_1lvuf")
+region = Rect2(0, 416, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pnopx"]
+radius = 4.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lkrwe"]
+size = Vector2(10, 11)
+
+[node name="Rock" instance=ExtResource("1_danh2")]
+collision_mask = 2
+resources_scene = ExtResource("2_ce85j")
+
+[node name="HitFlashComponent" parent="." index="1"]
+hit_flash_material = SubResource("ShaderMaterial_t31md")
+
+[node name="Sprite2D" parent="." index="2"]
+texture = SubResource("AtlasTexture_gjybo")
+offset = Vector2(0, -6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="3"]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_pnopx")
+
+[node name="HurtBoxComponent" parent="Area" index="0"]
+hitbox_name = Array[String](["Pickaxe"])
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area/HurtBoxComponent" index="1"]
+position = Vector2(0, -5.5)
+shape = SubResource("RectangleShape2D_lkrwe")
+debug_color = Color(1.44392e-07, 0.645657, 0.255219, 0.42)
+
+[node name="FloatingTextMarker" parent="." index="5"]
+position = Vector2(0, -7)

@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://cd64mjkmycdni"]
+
+[ext_resource type="PackedScene" uid="uid://ctavi6etyfveo" path="res://source/entity/tower/base_tower.tscn" id="1_kfkws"]
+[ext_resource type="Shader" path="res://source/component/hit_flash_component.gdshader" id="2_ca8ah"]
+[ext_resource type="PackedScene" uid="uid://qmyieheusr13" path="res://source/entity/Bullet/arrow_bullet.tscn" id="2_ldl2o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r7bjq"]
+resource_local_to_scene = true
+shader = ExtResource("2_ca8ah")
+shader_parameter/lerp_percent = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n481b"]
+radius = 50.0
+
+[node name="ArrowTower" instance=ExtResource("1_kfkws")]
+bullet_scene = ExtResource("2_ldl2o")
+attack_range_radius = 80.0
+current_tower_type = 1
+
+[node name="HitFlashComponent" parent="." index="1"]
+hit_flash_material = SubResource("ShaderMaterial_r7bjq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" index="0"]
+unique_name_in_owner = true
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_n481b")

@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://d0yotj2tdcogb"]
+
+[ext_resource type="Script" path="res://source/entity/harvestable_resources/drop_resource.gd" id="1_jfetx"]
+[ext_resource type="PackedScene" uid="uid://ddbbemfex5roe" path="res://source/entity/harvestable_resources/harvestable_resources.tscn" id="2_1kj77"]
+[ext_resource type="PackedScene" uid="uid://c1stjyp02162r" path="res://source/component/random_audio_component.tscn" id="4_ro6rc"]
+[ext_resource type="AudioStream" uid="uid://cm6srk63sufja" path="res://assets/audio/drop/669459__ericssoundschmiede__sfx_wood_fall_pile_bunch_stone_floor_02.wav" id="5_2t1mc"]
+
+[sub_resource type="Curve2D" id="Curve2D_pqhug"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -12.5404, -8.801, 0, 0, 0, 0, -23.7607, -15.204, 0, 0, 0, 0, -33.661, -19.209, 0, 0, 0, 0, -42.2412, -20.8159, 0, 0, 0, 0, -49.5015, -20.0249, 0, 0, 0, 0, -55.4416, -16.8358, 0, 0, 0, 0, -60.0618, -11.2488, 0, 0, 0, 0, -63.3619, -3.26371, 0, 0, 0, 0, -65.3419, 7.11936)
+}
+point_count = 10
+
+[node name="DropResource" type="Path2D" groups=["HarvestableResources"]]
+curve = SubResource("Curve2D_pqhug")
+script = ExtResource("1_jfetx")
+
+[node name="DropPathFollow" type="PathFollow2D" parent="."]
+rotation = -2.52965
+
+[node name="HarvestableResources" parent="DropPathFollow" instance=ExtResource("2_1kj77")]
+
+[node name="DropAudio" parent="." instance=ExtResource("4_ro6rc")]
+unique_name_in_owner = true
+volume_db = -25.0
+streams = Array[AudioStream]([ExtResource("5_2t1mc")])
