@@ -30,11 +30,11 @@ y_sort_enabled = true
 [node name="resource_nodes" type="Node2D" parent="YSort/Entity" groups=["resource_nodes"]]
 y_sort_enabled = true
 
-[node name="Enemy" type="Node2D" parent="YSort"]
+[node name="EnemyNodeLayer" type="Node2D" parent="YSort" groups=["EnemyNodeLayer"]]
 unique_name_in_owner = true
 y_sort_enabled = true
 
-[node name="BrownMouse" parent="YSort/Enemy" instance=ExtResource("3_mt7uu")]
+[node name="BrownMouse" parent="YSort/EnemyNodeLayer" instance=ExtResource("3_mt7uu")]
 position = Vector2(593, 205)
 
 [node name="ForegroundLayer" type="Node2D" parent="." groups=["ForegroundLayer"]]

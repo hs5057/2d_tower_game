@@ -3,8 +3,8 @@ extends Node2D
 @onready var world: Node2D = %World
 @onready var player: Player = %Player
 @onready var entity: Node2D = %Entity
-@onready var enemy: Node2D = %Enemy
 @onready var game_ui: CanvasLayer = %GameUI
+@onready var enemy_node_layer: Node2D = %EnemyNodeLayer
 
 
 func _ready() -> void:

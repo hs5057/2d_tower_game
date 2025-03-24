@@ -44,6 +44,7 @@ tile_map_data = PackedByteArray("AAAAABYAAgAAAAcAAAACABYAAgAAAAcAAAABABQAAgAAAAc
 tile_set = ExtResource("1_ra3m6")
 
 [node name="AirWall" parent="." instance=ExtResource("5_1jp2v")]
+position = Vector2(0, -522)
 collision_layer = 4096
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AirWall"]
@@ -126,17 +127,21 @@ position = Vector2(495, 260)
 
 [node name="SpawnPointTop" parent="SpawnPoints" instance=ExtResource("11_agjb7")]
 unique_name_in_owner = true
+position = Vector2(311, 61)
 
 [node name="SpawnPointRight" parent="SpawnPoints" instance=ExtResource("11_agjb7")]
 unique_name_in_owner = true
+position = Vector2(555, 198)
 spawn_direction = 1
 
 [node name="SpawnPointDown" parent="SpawnPoints" instance=ExtResource("11_agjb7")]
 unique_name_in_owner = true
+position = Vector2(310, 336)
 spawn_direction = 2
 
 [node name="SpawnPointLeft" parent="SpawnPoints" instance=ExtResource("11_agjb7")]
 unique_name_in_owner = true
+position = Vector2(23, 199)
 spawn_direction = 3
 
 [node name="BaseHouse" parent="." instance=ExtResource("3_xio2v")]

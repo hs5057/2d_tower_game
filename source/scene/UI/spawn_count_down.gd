@@ -13,8 +13,7 @@ signal countdown_finished
 
 func start_countdown(duration: float, direction: SpawnDirection):
 	self.direction = direction
-	visible = true  # 显示对应方向的倒计时
-	
+	visible = true
 	progress_bar.max_value = duration
 	progress_bar.value = 0
 	timer.start(duration)

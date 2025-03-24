@@ -24,37 +24,44 @@ func _ready():
 	difficulty_timer.wait_time = 10.0
 	difficulty_timer.autostart = true
 	difficulty_timer.timeout.connect(update_difficulty)
-	add_child(difficulty_timer)
+	add_child(difficulty_timer)       
 
 
 func update_difficulty():
-	# 难度因子 = 基础值 + 时间因子 + 等级因子
-	var time_factor = TimeSystem.get_total_game_minutes() * 0.01  # 每分钟增加0.01
-	var level_factor = PlayerData.current_level * 0.1              # 每级增加0.1
-	difficulty_factor = 0.5 + time_factor + level_factor
-
+	var time_factor = TimeSystem.get_total_game_minutes() * 0.005	# 降低时间因子
+	var level_factor = PlayerData.current_level * 0.05				# 降低等级因子
+	difficulty_factor = 0.3 + time_factor + level_factor			# 基础值从0.3开始
+	print("当前难度因子：", difficulty_factor)
+	
+	
 
 func spawn_enemies():
 	var active_points = _get_active_spawn_points()
+	print("active_points:",active_points)
 	for point in active_points:
 		_spawn_enemies_at_point(point)
 
 
 func _get_active_spawn_points() -> Array:
 	# 根据难度因子决定激活的生成点数量
-	var max_points = min(ceil(difficulty_factor), 4)  # 最多4个方向
+	var max_points = min(ceil(difficulty_factor), 4)
 	var points = get_tree().get_nodes_in_group("SpawnPoint")
 	points.shuffle()
-	return points.slice(0, max_points - 1)
+	# 修正：slice(0, max_points) 而非 max_points - 1
+	var re_points = points.slice(0, max_points)
+	print("re_points:",re_points)
+	return re_points
 
 
 func _spawn_enemies_at_point(point: SpawnPoint):
-	# 获取生成点的方向
 	var direction = point.spawn_direction
-	
-	# 显示对应方向的倒计时UI
 	var countdown_ui = _get_countdown_ui(direction)
-	countdown_ui.start_countdown(3.0, direction)  # 传递两个参数
+	
+	if countdown_ui == null:
+		push_error("倒计时UI节点未找到！方向：", direction)
+		return
+	
+	countdown_ui.start_countdown(15.0, direction)
 	await countdown_ui.countdown_finished
 	
 	# 生成敌人
@@ -65,21 +72,30 @@ func _spawn_enemies_at_point(point: SpawnPoint):
 	for i in count:
 		var enemy_scene = enemy_scenes[1]
 		var enemy = enemy_scene.instantiate()
+		print(enemy)
 		enemy.level = randi_range(level_min, level_max)
+		var enemy_node_layer = get_tree().get_first_node_in_group("EnemyNodeLayer")
+		enemy_node_layer.add_child(enemy)
+		print("point_global_position:",point.global_position)
 		enemy.global_position = point.global_position
-		get_tree().current_scene.add_child(enemy)
+		await get_tree().create_timer(1.0).timeout
 
 
 func _get_countdown_ui(direction: SpawnPoint.SpawnDirection) -> SpawnCountdown:
+	var ui_path: String
 	match direction:
 		SpawnPoint.SpawnDirection.TOP:
-			return %TopCountdown
+			ui_path = "/root/Main/GameUI/Countdowns/TopCountdown"
 		SpawnPoint.SpawnDirection.RIGHT:
-			return %RightCountdown
+			ui_path = "/root/Main/GameUI/Countdowns/RightCountdown"
 		SpawnPoint.SpawnDirection.BOTTOM:
-			return %BottomCountdown
+			ui_path = "/root/Main/GameUI/Countdowns/BottomCountdown"
 		SpawnPoint.SpawnDirection.LEFT:
-			return %LeftCountdown
+			ui_path = "/root/Main/GameUI/Countdowns/LeftCountdown"
 		_:
 			push_error("未知的生成方向: ", direction)
-			return %TopCountdown  # 默认返回顶部倒计时
+			ui_path = "/root/Main/GameUI/Countdowns/TopCountdown"
+	
+	var ui_node = get_node(ui_path)
+	print("[EnemyManager] 绝对路径获取节点：", ui_node)
+	return ui_node

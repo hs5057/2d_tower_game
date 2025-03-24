@@ -39,6 +39,7 @@ Player=""
 BaseHouse=""
 PointLight=""
 SpawnPoint=""
+EnemyNodeLayer=""
 
 [input]
 

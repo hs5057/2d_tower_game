@@ -6,6 +6,7 @@ var game_time_speed: float = 1.0 / REAL_SECONDS_PER_GAME_HOUR
 
 var wave_interval_hours = 6  # 每6小时生成一波
 var total_game_minutes: float = 0.0
+var _triggered_hours = []  # 记录已触发的生成时间
 
 # 时间初始值
 var year: int = 1
@@ -24,6 +25,7 @@ signal season_changed(season: String)
 
 func _process(delta: float):
 	advance_time(delta * game_time_speed * 3600)
+
 
 func advance_time(seconds: float):
 	total_minutes += seconds / 60.0
@@ -56,11 +58,19 @@ func advance_time(seconds: float):
 	time_updated.emit(year, month, day, hour, minute)
 	#print("[TimeSystem] 当前日期: %04d-%02d-%02d" % [year, month, day])
 	
-	# 触发生成波次（每小时检查一次）
-	if hour % wave_interval_hours == 0 && minute == 0:
+	# 触发生成波次（每天6、12、18、24点生成）
+	var trigger_hours = [6, 12, 18, 24]
+	if hour in trigger_hours and minute == 0 and not _triggered_hours.has(hour):
+		_triggered_hours.append(hour)
 		EnemyManager.spawn_enemies()
-		
+		print("[TimeSystem] 触发生成波次：", hour)
+	
+	# 每日重置触发记录
+	if hour == 0 and minute == 1:
+		_triggered_hours.clear()
+	
 	total_game_minutes += seconds / 60.0
+
 
 func update_season():
 	if month in [1, 2, 3]:

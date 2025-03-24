@@ -59,6 +59,7 @@ unique_name_in_owner = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 unique_name_in_owner = true
+debug_enabled = true
 
 [node name="AttackIntervalTimer" type="Timer" parent="."]
 unique_name_in_owner = true
