@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8v3l2pytwrc8"]
+[gd_scene load_steps=11 format=3 uid="uid://c8v3l2pytwrc8"]
 
 [ext_resource type="Script" path="res://source/scene/UI/ui_time_display.gd" id="1_qpd7x"]
 [ext_resource type="Texture2D" uid="uid://bblvbgab1koy3" path="res://assets/texture/ui/GUI.png" id="2_fsxyo"]
 [ext_resource type="Texture2D" uid="uid://c5pc1lrxx22m6" path="res://assets/texture/ui/moon.png" id="3_00266"]
 [ext_resource type="Texture2D" uid="uid://bko6sw7qfn0h5" path="res://assets/texture/ui/seasons/spring.png" id="4_2bqnc"]
+[ext_resource type="Texture2D" uid="uid://brbqiwc8s0f8y" path="res://assets/texture/ui/MediavelFree.png" id="5_l8nca"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pre5w"]
 atlas = ExtResource("2_fsxyo")
@@ -16,12 +17,26 @@ texture_margin_top = 6.0
 texture_margin_right = 6.0
 texture_margin_bottom = 5.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqac5"]
+atlas = ExtResource("5_l8nca")
+region = Rect2(240, 112, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m04qn"]
+load_path = "res://.godot/imported/MediavelFree.png-2afd6b0e63598d382ff584c3113b7a51.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hs0nf"]
+atlas = SubResource("CompressedTexture2D_m04qn")
+region = Rect2(224, 96, 16, 16)
+
 [node name="UI_TimeDisplay" type="Control"]
+process_mode = 3
+custom_minimum_size = Vector2(89, 67)
 layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0
+mouse_filter = 1
 script = ExtResource("1_qpd7x")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -35,32 +50,35 @@ grow_horizontal = 0
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 5
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(80, 44)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxTexture_wargm")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(28, 33)
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_constants/separation = 0
 
-[node name="DayNightTexture" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+[node name="DayNightTexture" type="TextureRect" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
@@ -69,7 +87,7 @@ texture = ExtResource("3_00266")
 expand_mode = 2
 stretch_mode = 6
 
-[node name="SeasonTexture" type="TextureRect" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+[node name="SeasonTexture" type="TextureRect" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(14, 12)
 layout_mode = 2
@@ -77,7 +95,7 @@ texture = ExtResource("4_2bqnc")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TimeLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="TimeLabel" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 17)
 layout_mode = 2
@@ -91,18 +109,18 @@ text = "24:59"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(40, 25)
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(38, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_constants/margin_right = 2
 
-[node name="YearLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer"]
+[node name="YearLabel" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(38, 15)
 layout_mode = 2
@@ -116,13 +134,13 @@ text = "1年"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(38, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_constants/margin_right = 2
 
-[node name="DateLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer2"]
+[node name="DateLabel" type="Label" parent="MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/MarginContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(38, 18)
 layout_mode = 2
@@ -135,3 +153,19 @@ theme_override_font_sizes/font_size = 11
 text = "01 / 01"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PauseButton" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+process_mode = 3
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_nqac5")
+
+[node name="SettingsButton" type="TextureButton" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+process_mode = 3
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_hs0nf")

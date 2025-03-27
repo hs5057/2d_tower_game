@@ -19,12 +19,27 @@ var total_minutes: float = 0.0
 var is_daytime: bool = false
 var current_season: String = "Spring"
 
+# 暂停的数量
+var pause_count: int = 0:
+	set(value):
+		pause_count = max(value,0)
+		check_current_pause_count(pause_count)
+
 signal time_updated(year: int, month: int, day: int, hour: int, minute: int)
 signal day_night_switch(is_daytime: bool)
 signal season_changed(season: String)
 
+
+
 func _process(delta: float):
 	advance_time(delta * game_time_speed * 3600)
+
+
+func check_current_pause_count(count: int) -> void:
+	if count > 0:
+		get_tree().paused = true
+	else:
+		get_tree().paused = false
 
 
 func advance_time(seconds: float):

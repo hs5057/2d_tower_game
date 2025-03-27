@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://fp23ctagd6sj" path="res://assets/texture/tilemap/punyworld-overworld-tileset.png" id="4_syu0p"]
 [ext_resource type="PackedScene" uid="uid://beoxyu150c3qn" path="res://source/scene/UI/resources_nav.tscn" id="6_scixa"]
 [ext_resource type="PackedScene" uid="uid://c8v3l2pytwrc8" path="res://source/scene/UI/ui_time_display.tscn" id="7_lr2wu"]
-[ext_resource type="PackedScene" uid="uid://dca5x6hgibajj" path="res://source/scene/UI/spawn_count_down.tscn" id="8_i3jky"]
 [ext_resource type="PackedScene" uid="uid://dcg7fsn0f1qcp" path="res://source/scene/UI/debug_level.tscn" id="9_463du"]
+[ext_resource type="PackedScene" uid="uid://dfc6syl6x6bto" path="res://source/scene/UI/settings_interface.tscn" id="9_xul35"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j6fkh"]
 atlas = ExtResource("3_vqf8p")
@@ -30,7 +30,8 @@ region = Rect2(272, 528, 16, 16)
 script = ExtResource("1_dq8t4")
 
 [node name="ShortcutBar" type="Control" parent="."]
-custom_minimum_size = Vector2(236, 34)
+unique_name_in_owner = true
+custom_minimum_size = Vector2(236, 61)
 layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
@@ -180,8 +181,14 @@ layout_mode = 2
 index_num = 8
 
 [node name="ResourcesNav" parent="." instance=ExtResource("6_scixa")]
+unique_name_in_owner = true
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 388.0
+offset_bottom = 28.0
 
 [node name="UI_TimeDisplay" parent="." instance=ExtResource("7_lr2wu")]
+unique_name_in_owner = true
 
 [node name="DebugLevel" parent="." instance=ExtResource("9_463du")]
 offset_left = 13.0
@@ -189,69 +196,6 @@ offset_top = 41.0
 offset_right = 137.0
 offset_bottom = 81.0
 
-[node name="Countdowns" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="TopCountdown" parent="Countdowns" instance=ExtResource("8_i3jky")]
+[node name="SettingsInterface" parent="." instance=ExtResource("9_xul35")]
 unique_name_in_owner = true
 visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -8.0
-offset_top = 21.0
-offset_right = 8.0
-offset_bottom = 37.0
-grow_horizontal = 2
-
-[node name="RightCountdown" parent="Countdowns" instance=ExtResource("8_i3jky")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -8.0
-offset_right = -16.0
-offset_bottom = 8.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="BottomCountdown" parent="Countdowns" instance=ExtResource("8_i3jky")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -8.0
-offset_top = -48.0
-offset_right = 8.0
-offset_bottom = -32.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="LeftCountdown" parent="Countdowns" instance=ExtResource("8_i3jky")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 16.0
-offset_top = -8.0
-offset_right = 32.0
-offset_bottom = 8.0
-grow_vertical = 2

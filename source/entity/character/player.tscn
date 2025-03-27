@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bsktqtyks74fs"]
+[gd_scene load_steps=21 format=3 uid="uid://bsktqtyks74fs"]
 
 [ext_resource type="Texture2D" uid="uid://dkwf2bnvntqbs" path="res://assets/texture/tilemap/tilemap_packed2.png" id="1_cuy5s"]
 [ext_resource type="Script" path="res://source/entity/character/player.gd" id="1_l0oml"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://ce6f2nn280c5d" path="res://assets/audio/footstep/footstep_grass_002.ogg" id="7_n17xu"]
 [ext_resource type="AudioStream" uid="uid://23ut5tddwaoe" path="res://assets/audio/footstep/footstep_grass_003.ogg" id="8_4sg0p"]
 [ext_resource type="AudioStream" uid="uid://bu2oo3s8tinc0" path="res://assets/audio/footstep/footstep_grass_004.ogg" id="9_g0efy"]
+[ext_resource type="PackedScene" uid="uid://b2uxfgh3ne1wx" path="res://source/scene/UI/player_gui.tscn" id="10_xufr0"]
 
 [sub_resource type="Animation" id="Animation_c6v5w"]
 length = 0.001
@@ -282,3 +283,7 @@ current = true
 volume_db = -25.0
 streams = Array[AudioStream]([ExtResource("5_371by"), ExtResource("6_o37r3"), ExtResource("7_n17xu"), ExtResource("8_4sg0p"), ExtResource("9_g0efy")])
 randomize_pitch = false
+
+[node name="PlayerGUI" parent="." instance=ExtResource("10_xufr0")]
+
+[connection signal="enviar_joystick" from="PlayerGUI" to="." method="recibir_joystick"]

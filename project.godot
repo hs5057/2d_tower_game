@@ -21,6 +21,7 @@ PlayerData="*res://source/script/autoload/PlayerData.gd"
 PlayerSignal="*res://source/script/autoload/PlayerSignal.gd"
 TimeSystem="*res://source/script/autoload/TimeSystem.gd"
 EnemyManager="*res://source/script/autoload/enemy_manager.gd"
+Log="*res://source/script/autoload/log.gd"
 
 [display]
 
@@ -69,6 +70,10 @@ attack={
 ]
 }
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
 [layer_names]
 
 2d_render/layer_1="环境"
@@ -97,3 +102,4 @@ attack={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+textures/vram_compression/import_etc2_astc=true

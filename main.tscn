@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cysaitc3w7026"]
+[gd_scene load_steps=9 format=3 uid="uid://cysaitc3w7026"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_h3syk"]
 [ext_resource type="PackedScene" uid="uid://e0khwrvwj6qu" path="res://source/levels/world_01.tscn" id="1_wjgjl"]
@@ -7,9 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://da63nog1avgoq" path="res://source/entity/enemy/brown_mouse.tscn" id="3_mt7uu"]
 [ext_resource type="PackedScene" uid="uid://be2o0bie20lwj" path="res://source/component/audio_2d_component.tscn" id="6_fk4mn"]
 [ext_resource type="AudioStream" uid="uid://fxxh05sw8eni" path="res://assets/audio/forest/254081__capslok__birds_chirping.wav" id="7_oqmaw"]
+[ext_resource type="PackedScene" uid="uid://doly8c4qdeubc" path="res://source/scene/UI/debug_overlay.tscn" id="8_ksbr2"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_h3syk")
+
+[node name="ForestAudio" parent="." instance=ExtResource("6_fk4mn")]
+audios = Array[AudioStream]([ExtResource("7_oqmaw")])
 
 [node name="YSort" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -17,11 +21,6 @@ y_sort_enabled = true
 [node name="World" parent="YSort" instance=ExtResource("1_wjgjl")]
 unique_name_in_owner = true
 y_sort_enabled = true
-
-[node name="Player" parent="YSort" instance=ExtResource("2_hwyyy")]
-unique_name_in_owner = true
-y_sort_enabled = true
-position = Vector2(246, 245)
 
 [node name="Entity" type="Node2D" parent="YSort"]
 unique_name_in_owner = true
@@ -37,11 +36,15 @@ y_sort_enabled = true
 [node name="BrownMouse" parent="YSort/EnemyNodeLayer" instance=ExtResource("3_mt7uu")]
 position = Vector2(593, 205)
 
+[node name="Player" parent="YSort" instance=ExtResource("2_hwyyy")]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(845, -81)
+
 [node name="ForegroundLayer" type="Node2D" parent="." groups=["ForegroundLayer"]]
 z_index = 10
 
+[node name="DebugOverlay" parent="." instance=ExtResource("8_ksbr2")]
+
 [node name="GameUI" parent="." instance=ExtResource("3_d26qw")]
 unique_name_in_owner = true
-
-[node name="ForestAudio" parent="." instance=ExtResource("6_fk4mn")]
-audios = Array[AudioStream]([ExtResource("7_oqmaw")])

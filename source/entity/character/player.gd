@@ -5,7 +5,14 @@ const AXE = preload("res://source/entity/weapons/axe.tscn")
 const PICKAXE = preload("res://source/entity/weapons/pickaxe.tscn")
 const MAX_SPEED = 50.0
 const ACCELERATION_SMOOTHING = 25
+
 var last_move_sign = 1  # 新增变量记录最后方向
+var direction: Vector2
+var movement_vector: Vector2
+var weapon : BaseWeapon
+var is_attacking: bool = false
+var tween:Tween = create_tween()
+var joystick: Joystick
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var visuals: Node2D = $Visuals
@@ -13,19 +20,19 @@ var last_move_sign = 1  # 新增变量记录最后方向
 @onready var player_pick_up_area: Area2D = %PlayerPickUpArea
 @onready var point_light: PointLight2D = $PointLight2D2
 @onready var walk_audio: RandomAudioComponent = $WalkAudio
+@onready var player_gui: CanvasLayer = $PlayerGUI
+@onready var camera_2d: Camera2D = $Camera2D
 
-
-var weapon : BaseWeapon
-var is_attacking: bool = false
-var tween:Tween = create_tween()
 
 
 func _ready() -> void:
+	tween.kill()
 	walk_audio.stop()
 	weapon = weapons.get_child(0)
 	player_pick_up_area.area_entered.connect(_on_player_pick_up_area_area_entered)
 	player_pick_up_area.area_exited.connect(_on_player_pick_up_area_area_exited)
 	PlayerSignal.current_weapon_changed.connect(_on_current_weapon_changed)
+	player_gui.interaction_button_down.connect(_on_player_gui_interaction_button_down)
 
 
 func _process(delta: float) -> void:
@@ -33,8 +40,8 @@ func _process(delta: float) -> void:
 		animation_player.play("attack")
 		velocity = Vector2.ZERO
 		return
-	var movement_vector = get_movement_vector()
-	var direction = movement_vector.normalized()
+	#movement_vector = get_movement_vector()
+	direction = movement_vector.normalized()
 	var target_velocity = direction * MAX_SPEED
 	velocity = velocity.lerp(target_velocity, 1 - exp(-delta * ACCELERATION_SMOOTHING))
 	
@@ -58,12 +65,35 @@ func _process(delta: float) -> void:
 		last_move_sign = move_sign  # 记录当前方向
 
 
+func recibir_joystick(j: Joystick) -> void:
+	joystick = j
+
+
+func _input(event: InputEvent) -> void:
+	if joystick != null and is_instance_valid(joystick):
+		movement_vector = joystick.direction
+	else:
+		movement_vector = get_movement_vector()
+
+
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("attack"):
-		is_attacking = true
-		weapons.get_child(0).anim_play("attack")
-		await weapons.get_child(0).animation_player.animation_finished
-		is_attacking = false
+	var os_name = OS.get_name()
+	if event.is_action_pressed("attack") and (os_name == "Windows" or os_name == "Web"):
+		attack()
+	else:
+		return
+
+
+func _on_player_gui_interaction_button_down() -> void:
+	attack()
+
+
+func attack() -> void:
+	is_attacking = true
+	var _current_weapon = weapons.get_child(0)
+	_current_weapon.anim_play("attack")
+	await _current_weapon.animation_player.animation_finished
+	is_attacking = false
 
 
 # 获取移动向量
@@ -110,9 +140,6 @@ func _on_player_pick_up_area_area_entered(area: Area2D) -> void:
 		pick_up(area)
 	
 	if target.is_in_group("BaseHouse"):
-		#point_light_2d.range_item_cull_mask = (1 << 1) | (1 << 4)   # 检测层 2 和 5
-		#print("进入：",point_light_2d.range_item_cull_mask)
-		#var tween:Tween = create_tween()
 		# 停止旧 Tween
 		if tween != null && tween.is_valid():
 			tween.kill()
@@ -127,10 +154,7 @@ func _on_player_pick_up_area_area_exited(area: Area2D) -> void:
 		return
 	
 	if target.is_in_group("BaseHouse"):
-		#print(point_light_2d.get_item_cull_mask())
-		#point_light_2d.range_item_cull_mask = (1 << 0) | (1 << 1) | (1 << 4)   # 检测层1 、 2 、 5
-		#print("离开：",point_light_2d.range_item_cull_mask)
-		#var tween:Tween = create_tween()
+		# 停止旧 Tween
 		if tween != null && tween.is_valid():
 			tween.kill()
 		tween = create_tween()

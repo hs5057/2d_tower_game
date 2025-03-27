@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://b2uxfgh3ne1wx"]
+
+[ext_resource type="Script" path="res://source/scene/UI/player_gui.gd" id="1_1175c"]
+[ext_resource type="PackedScene" uid="uid://c8rwaffmnlt31" path="res://source/scene/UI/joystick.tscn" id="1_ws73q"]
+[ext_resource type="Texture2D" uid="uid://qm7ftw3l1mib" path="res://assets/texture/ui/flatDark35.png" id="3_gvw42"]
+
+[node name="PlayerGUI" type="CanvasLayer"]
+script = ExtResource("1_1175c")
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(162, 162)
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -179.0
+offset_right = 180.0
+offset_bottom = -19.0
+grow_vertical = 0
+
+[node name="Joystick" parent="." instance=ExtResource("1_ws73q")]
+position = Vector2(101, 261)
+
+[node name="DirectionLabel" type="Label" parent="."]
+visible = false
+offset_left = 81.0
+offset_top = 146.0
+offset_right = 121.0
+offset_bottom = 169.0
+
+[node name="InteractionButton" type="TextureButton" parent="."]
+unique_name_in_owner = true
+offset_left = 521.0
+offset_top = 251.0
+offset_right = 521.0
+offset_bottom = 251.0
+pivot_offset = Vector2(40, 40)
+texture_normal = ExtResource("3_gvw42")
+texture_pressed = ExtResource("3_gvw42")
+texture_focused = ExtResource("3_gvw42")

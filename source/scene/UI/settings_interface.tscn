@@ -1,0 +1,194 @@
+[gd_scene load_steps=8 format=3 uid="uid://dfc6syl6x6bto"]
+
+[ext_resource type="Texture2D" uid="uid://bblvbgab1koy3" path="res://assets/texture/ui/GUI.png" id="1_mttg0"]
+[ext_resource type="Script" path="res://source/scene/UI/settings_interface.gd" id="1_qkl1t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hodk"]
+bg_color = Color(0.247059, 0.156863, 0.196078, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbitu"]
+atlas = ExtResource("1_mttg0")
+region = Rect2(145, 81, 46, 14)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dtt2j"]
+load_path = "res://.godot/imported/GUI.png-122ce6bb36a7ac0e888a457776597dc4.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l3hgi"]
+atlas = SubResource("CompressedTexture2D_dtt2j")
+region = Rect2(145, 98, 46, 13)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mhtax"]
+bg_color = Color(0.454902, 0.247059, 0.223529, 1)
+
+[node name="SettingsInterface" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_qkl1t")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8hodk")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Panel"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ContinueButton" type="TextureButton" parent="Control/Panel/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_gbitu")
+texture_pressed = SubResource("AtlasTexture_l3hgi")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Control/Panel/VBoxContainer/ContinueButton"]
+custom_minimum_size = Vector2(40, 14)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -7.0
+offset_right = 20.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "继续游戏"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioButton" type="TextureButton" parent="Control/Panel/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_gbitu")
+texture_pressed = SubResource("AtlasTexture_l3hgi")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Control/Panel/VBoxContainer/AudioButton"]
+custom_minimum_size = Vector2(40, 14)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -7.0
+offset_right = 20.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "音效设置"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OtherButton" type="TextureButton" parent="Control/Panel/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_gbitu")
+texture_pressed = SubResource("AtlasTexture_l3hgi")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Control/Panel/VBoxContainer/OtherButton"]
+custom_minimum_size = Vector2(40, 14)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -7.0
+offset_right = 20.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "其他设置"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitButton" type="TextureButton" parent="Control/Panel/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_gbitu")
+texture_pressed = SubResource("AtlasTexture_l3hgi")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Control/Panel/VBoxContainer/QuitButton"]
+custom_minimum_size = Vector2(40, 14)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -7.0
+offset_right = 20.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "退出游戏"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(300, 300)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 150)
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mhtax")

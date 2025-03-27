@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-
 @onready var grid_container: GridContainer = %GridContainer
 @onready var weapon_grid: GridContainer = %WeaponGrid
 @onready var weapon_1: Button = %Weapon1
@@ -14,11 +13,8 @@ extends CanvasLayer
 @onready var slot_background_7: Button = %SlotBackground7
 @onready var slot_background_8: Button = %SlotBackground8
 
-@onready var top_countdown: SpawnCountdown = %TopCountdown
-@onready var right_countdown: SpawnCountdown = %RightCountdown
-@onready var bottom_countdown: SpawnCountdown = %BottomCountdown
-@onready var left_countdown: SpawnCountdown = %LeftCountdown
-
+@onready var ui_time_display: Control = %UI_TimeDisplay
+@onready var settings_interface: CanvasLayer = %SettingsInterface
 
 var weapon_grid_show: bool = false
 
@@ -31,6 +27,9 @@ func _ready() -> void:
 	for slot in weapon_grid.get_children():
 		slot.on_focus_entered.connect(_on_slot_on_focus_entered)
 		slot.on_pressed.connect(_on_slot_on_pressed)
+	
+	# 设置按钮信号
+	ui_time_display.settings_button_pressed.connect(_on_ui_time_display_settings_button_pressed)
 
 
 func _on_slot_on_focus_entered(_index_num: int) -> void:
@@ -70,3 +69,8 @@ func _on_slot_on_pressed(_index_num: int, _type_name: String) -> void:
 		await weapon_2.on_scale_tween_finished
 		weapon_grid.hide()
 		weapon_grid_show = false
+
+
+func _on_ui_time_display_settings_button_pressed() -> void:
+	TimeSystem.pause_count += 1
+	settings_interface.show()

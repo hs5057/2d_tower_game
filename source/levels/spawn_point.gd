@@ -6,4 +6,4 @@ enum SpawnDirection { TOP, RIGHT, BOTTOM, LEFT }
 
 
 func _ready():
-	print("生成点方向：", spawn_direction, " | 坐标：", global_position)
+	print("[SpawnPoint]-[%s] 生成点方向：%s | 坐标：%s" % [self.name, spawn_direction, self.global_position])
